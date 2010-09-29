@@ -1,0 +1,69 @@
+﻿<phone:PhoneApplicationPage x:Class="TekpubBrowser.MainPage"
+							xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+							xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+							xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+							xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+							xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+							xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+							xmlns:c="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+							mc:Ignorable="d"
+							d:DesignWidth="480"
+							d:DesignHeight="768"
+							FontFamily="{StaticResource PhoneFontFamilyNormal}"
+							FontSize="{StaticResource PhoneFontSizeNormal}"
+							Foreground="{StaticResource PhoneForegroundBrush}"
+							SupportedOrientations="Portrait"
+							Orientation="Portrait"
+							shell:SystemTray.IsVisible="True">
+
+	<phone:PhoneApplicationPage.Resources>
+
+		<DataTemplate x:Key="ProductionTemplate">
+			<StackPanel Margin="0 0 0 12"
+						Tag="{Binding ProductionDetail}">
+
+				<TextBlock Text="{Binding title}"
+						   TextWrapping="Wrap"
+						   Foreground="{StaticResource PhoneAccentBrush}"
+						   FontSize="{StaticResource PhoneFontSizeLarge}" />
+
+				<TextBlock Text="{Binding EpisodeCount}"
+						   FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+						   Margin="12 0 0 0"
+						   FontFamily="{StaticResource PhoneFontFamilyLight}" />
+				<TextBlock Text="{Binding TotalDuration}"
+						   FontSize="{StaticResource PhoneFontSizeMediumLarge}"
+						   Margin="12 0 0 0"
+						   FontFamily="{StaticResource PhoneFontFamilyLight}" />
+			</StackPanel>
+		</DataTemplate>
+
+		<DataTemplate x:Key="CategoryItemTemplate">
+			<ListBox SelectionChanged="ListBox_SelectionChanged"
+					 ItemsSource="{Binding Productions}"
+					 ItemTemplate="{StaticResource ProductionTemplate}" />
+		</DataTemplate>
+
+		<DataTemplate x:Key="CategoryHeaderTemplate">
+			<TextBlock Text="{Binding Name}" />
+		</DataTemplate>
+
+	</phone:PhoneApplicationPage.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Image Source="http://tekpub.com/images/tekpub_logo_sm.png"
+			   HorizontalAlignment="Left"
+			   Width="360" />
+		<c:Pivot ItemsSource="{Binding}"
+				 Grid.Row="1"
+				 HeaderTemplate="{StaticResource CategoryHeaderTemplate}"
+				 ItemTemplate="{StaticResource CategoryItemTemplate}"
+				 LoadingPivotItem="LoadingPivotItem" />
+	</Grid>
+
+
+</phone:PhoneApplicationPage>
